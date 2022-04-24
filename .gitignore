@@ -1,6 +1,3 @@
-# Notebook is kept secret for now
-*.ipynb
-
 # Binary / Zipped
 *.xlsx
 *.pkl
