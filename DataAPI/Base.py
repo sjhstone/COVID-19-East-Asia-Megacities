@@ -66,6 +66,7 @@ class OnlineDataSource(DataSource):
     
     def sync(self):
         print(f'Syncing data of {self.cityId} ...')
+        print('', self.uri)
         self.df = pd.DataFrame(self.connect(), columns=self.colsIn)
         self.df = self.df_postprocess(self.df)
         self.state = 1
@@ -81,6 +82,7 @@ class FileDataSource(DataSource):
     
     def sync(self):
         print(f'Syncing data of {self.cityId} ...')
+        print('', self.uri)
         self.df = self.connect()
         self.df = self.df_postprocess(self.df)
         self.state = 1
