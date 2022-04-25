@@ -49,7 +49,7 @@ class DataSource:
         return 1
 
 
-class OnlineDataSource:
+class OnlineDataSource(DataSource):
     def __init__(
         self, cityId, cityName,
         httpRequester=requests.get,
