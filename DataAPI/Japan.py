@@ -37,7 +37,9 @@ class Tokyo(Japan):
         #   2022-04-12  1338408
         #   2022-04-13  1346661
         # see https://stopcovid19.metro.tokyo.lg.jp/zh-cn/cards/number-of-confirmed-cases/
-        df.loc[df['date'] == datetime.date(2022, 4, 11),'acc_cases'] = 1331486
+        if df.loc[df['date'] == datetime.date(2022, 4, 11),'acc_cases'].item() == df.loc[df['date'] == datetime.date(2022, 4, 10),'acc_cases'].item():
+            df.loc[df['date'] == datetime.date(2022, 4, 11),'acc_cases'] = 1331486
+            print('Found corrupted data, fixed.')
         return df
 
 class Osaka(Japan):
