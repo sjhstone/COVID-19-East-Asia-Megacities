@@ -42,3 +42,64 @@ class Shanghai(FileDataSource):
     def df_postprocess(self, df):
         df['date'] = pd.to_datetime(df['date'], format='%Y/%m/%d').dt.date
         return df
+
+class ShanghaiByDistrict(FileDataSource):
+    def __init__(self):
+        super().__init__(
+            'shanghai_by_district',
+            '上海',
+            initDate=datetime.date(2022, 3, 27),
+            uri=os.path.join('raw_data', 'shanghai_districts.csv')
+        )
+    def sync(self):
+        print(f'Syncing data of {self.cityId} ...')
+        print('', self.uri)
+        df = self.connect()
+        self.df = self.df_postprocess(df)
+        self.state = 1
+        print(f'Data of {self.cityId} synced.')
+        return self.df
+
+    def connect(self):
+        _, fmt = self.uri.split('.')
+        if fmt == 'xlsx':
+            return pd.read_excel(self.uri)
+        elif fmt == 'csv':
+            return pd.read_csv(self.uri)
+
+    def prepare(self):
+        if self.state < 1:
+            self.sync()
+        
+        print(f'Re-formatting data of {self.cityId} ...')
+        print(f'Data of {self.cityId} re-formatted.')
+
+        self.state = 2
+        return self.df
+    
+    def save_pickle(self, path):
+        if self.state < 2:
+            self.prepare()
+        self.df.to_pickle(os.path.join(path, f'{self.cityId}.pkl'))
+        print(f'Data of {self.cityId} saved as pickle.')
+        return 1
+        
+    def save_csv(self, path):
+        if self.state < 2:
+            self.prepare()
+        self.df.to_csv(os.path.join(path, f'{self.cityId}.csv'))
+        print(f'Data of {self.cityId} saved as csv.')
+        return 1
+    
+    def df_postprocess(self, df):
+        df['日期'] = pd.to_datetime(df['日期'], format='%Y/%m/%d').dt.date
+        for d in (
+            '浦东','黄浦','静安','徐汇','长宁','普陀','虹口','杨浦',
+            '宝山','闵行','嘉定','金山','松江','青浦','奉贤','崇明',
+        ):
+            df[d] = df[d].astype('int64')
+            df[d + '_累计'] = df[d].cumsum()
+            df[d + '_7日平均'] = df[d].rolling(window=7).mean()
+        df = df.dropna()
+        df = df[df['日期'] >= self.initDate]
+        return df
