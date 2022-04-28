@@ -58,7 +58,7 @@ To make plots, please refer to [the example iPython notebook](./example.ipynb).
 
 ### Keyword in Local Language
 | Region | COVID-19 | Omicron variant |
-|--|--|
+|--|--|--|
 | Korea | 코로나바이러스감염증-19 (코로나19) | 오미크론 변이 | 감염병 유행 |
 | Japan | 新型コロナウイルス感染症 | オミクロン変異株 | 感染症の流行 |
 | Hong Kong SAR, China | 2019冠狀病毒病 | Omicron變異株 | 疫情 |
