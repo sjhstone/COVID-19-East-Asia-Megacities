@@ -2,9 +2,9 @@
 
 This repository holds original Python code for processing and visualization COVID-19 data in East Asian megacities amid Omicron variant outbreak including Seoul (서울), Tokyo (東京), Osaka (大阪), Hong Kong (香港) and Shanghai (上海).
 
-### Data Scheme
+## Data Scheme
 
-#### 5-City Trend
+### 5-City Trend
 The processed data has the following fields:
 * date
 * daily new cases (raw)
@@ -15,7 +15,7 @@ The first day in the processed data is set to be the day of initial local Omicro
 
 The processed data can be found in [`data`](./data/) folder as CSV files.
 
-#### 上海市按各行政区疫情公开统计数据
+### 上海市按各行政区疫情公开统计数据
 (Shanghai District-wise Data)
 
 [处理前的原始数据](./raw_data/shanghai_districts.csv)包含各区自2022年2月26日起的每日实际新增感染者（即确诊病例+无症状感染者-由无症状感染者转为确诊）人数。
