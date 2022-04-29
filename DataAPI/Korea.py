@@ -5,7 +5,7 @@ import pandas as pd
 from DataAPI.Base import OnlineDataSource
 
 class Seoul(OnlineDataSource):
-    def __init__(self):
+    def __init__(self,initDate=datetime.date(2021, 12, 7)):
         super().__init__(
             'seoul',
             '서울',
@@ -13,7 +13,7 @@ class Seoul(OnlineDataSource):
             uri='https://www.seoul.go.kr/coronaV/searchCoronaDayStatus.do',
             colsIn=['C_DATE2','HJ_ACC'], # 'GAP'
             colsMap={'C_DATE2':'date','HJ_ACC':'acc_cases',},
-            initDate=datetime.date(2021, 12, 7)
+            initDate=initDate
         )
     
     def connect(self):

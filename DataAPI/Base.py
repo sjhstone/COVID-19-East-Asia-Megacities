@@ -110,17 +110,3 @@ class FileDataSource(DataSource):
         self.state = 2
         print(f'Data of {self.cityId} re-formatted.')
         return self.df
-    
-    def save_pickle(self, path):
-        if self.state < 2:
-            self.prepare()
-        self.df.to_pickle(os.path.join(path, f'{self.cityId}.pkl'))
-        print(f'Data of {self.cityId} saved as pickle.')
-        return 1
-        
-    def save_csv(self, path):
-        if self.state < 2:
-            self.prepare()
-        self.df.to_csv(os.path.join(path, f'{self.cityId}.csv'))
-        print(f'Data of {self.cityId} saved as csv.')
-        return 1

@@ -26,8 +26,8 @@ class Japan(OnlineDataSource):
 
 
 class Tokyo(Japan):
-    def __init__(self):
-        super().__init__('tokyo', '東京都', datetime.date(2021, 12, 24))
+    def __init__(self, initDate=datetime.date(2021, 12, 24)):
+        super().__init__('tokyo', '東京都', initDate)
     
     def df_postprocess(self, df):
         df = super().df_postprocess(df)
@@ -43,5 +43,5 @@ class Tokyo(Japan):
         return df
 
 class Osaka(Japan):
-    def __init__(self):
-        super().__init__('osaka', '大阪府', datetime.date(2021, 12, 22))
+    def __init__(self, initDate=datetime.date(2021, 12, 22)):
+        super().__init__('osaka', '大阪府', initDate)

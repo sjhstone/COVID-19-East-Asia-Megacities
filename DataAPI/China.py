@@ -6,14 +6,14 @@ from DataAPI.Base import OnlineDataSource, FileDataSource
 
 
 class HongKong(OnlineDataSource):
-    def __init__(self):
+    def __init__(self,initDate=datetime.date(2021, 12, 31)):
         super().__init__(
             'hongkong',
             '香港',
             uri='https://api.data.gov.hk/v2/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Flatest_situation_of_reported_cases_covid_19_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%2C%22filters%22%3A%5B%5B1%2C%22ct%22%2C%5B%22202%22%5D%5D%5D%7D',
             colsIn=['更新日期', '確診個案', '核酸檢測陽性的嚴重急性呼吸綜合症冠狀病毒2個案', '快速抗原測試陽性的嚴重急性呼吸綜合症冠狀病毒2個案'],
             colsMap={'更新日期':'date','確診個案':'pcr_pre22mar', '核酸檢測陽性的嚴重急性呼吸綜合症冠狀病毒2個案':'pcr_cases', '快速抗原測試陽性的嚴重急性呼吸綜合症冠狀病毒2個案':'latflow_cases'},
-            initDate=datetime.date(2021, 12, 31)
+            initDate=initDate
         )
     
     def connect(self):
@@ -29,11 +29,11 @@ class HongKong(OnlineDataSource):
         return df
 
 class Shanghai(FileDataSource):
-    def __init__(self):
+    def __init__(self,initDate=datetime.date(2022, 2, 26)):
         super().__init__(
             'shanghai',
             '上海',
-            initDate=datetime.date(2022, 2, 26),
+            initDate=initDate,
             uri=os.path.join('raw_data', 'shanghai.csv')
         )
     def connect(self):
