@@ -12,7 +12,7 @@ class DataSource:
         self.df = None
         self.firstDay = self.initDate - datetime.timedelta(days=7)
 
-    def prepare(self):
+    def prepare(self, rounding=True):
         if self.state < 1:
             self.sync()
         
@@ -26,6 +26,9 @@ class DataSource:
         
         self.df['cases_7dma'] = self.df['daily_cases'].rolling(window=7).mean()
         self.df = self.df.dropna()
+        if rounding:
+            self.df['cases_7dma'] = self.df['cases_7dma'].round(decimals = 0)
+            self.df = self.df.astype({'cases_7dma':'int64'})
 
         self.df['acc_cases'] = self.df['daily_cases'].cumsum()
         self.df = self.df.reset_index(drop=True)
@@ -87,26 +90,4 @@ class FileDataSource(DataSource):
         self.df = self.df_postprocess(self.df)
         self.state = 1
         print(f'Data of {self.cityId} synced.')
-        return self.df
-    
-    def prepare(self):
-        if self.state < 1:
-            self.sync()
-        
-        print(f'Re-formatting data of {self.cityId} ...')
-        self.df = self.df[self.df['date'] >= self.firstDay]
-        
-        self.df['daily_cases'] = self.df['acc_cases'].diff()
-        self.df = self.df.dropna()
-        
-        self.df = self.df.astype({'acc_cases':'int64','daily_cases':'int64'})
-        
-        self.df['cases_7dma'] = self.df['daily_cases'].rolling(window=7).mean()
-        self.df = self.df.dropna()
-
-        self.df['acc_cases'] = self.df['daily_cases'].cumsum()
-        self.df = self.df.reset_index(drop=True)
-        
-        self.state = 2
-        print(f'Data of {self.cityId} re-formatted.')
         return self.df
