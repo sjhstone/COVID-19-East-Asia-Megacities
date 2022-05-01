@@ -4,17 +4,26 @@ import pandas as pd
 import os.path
 
 class DataSource:
-    def __init__(self, cityId, cityName, initDate):
+    def __init__(self, cityId, cityName, initDate, target='py'):
         self.state = 0
         self.cityId = cityId
         self.cityName = cityName
         self.initDate = initDate
         self.df = None
         self.firstDay = self.initDate - datetime.timedelta(days=7)
+        self.target = target
 
     def prepare(self, rounding=True):
         if self.state < 1:
             self.sync()
+        
+        population = {
+            'shanghai': 25665000,
+            'seoul': 9736027,
+            'tokyo': 14047594,
+            'osaka': 8784059,
+            'hongkong': 7413100,
+        }
         
         print(f'Re-formatting data of {self.cityId} ...')
         self.df = self.df[self.df['date'] >= self.firstDay]
@@ -32,10 +41,47 @@ class DataSource:
 
         self.df['acc_cases'] = self.df['daily_cases'].cumsum()
         self.df = self.df.reset_index(drop=True)
+
+        if self.target == 'web':
+            self.df['累计占总人口比'] = self.df['acc_cases'] / population[self.cityId] * 100
+            self.df = self.df.astype({'累计占总人口比':'int64'})
+            self.df.index.name = '天数'
+            self.df = self.df.rename(columns = {
+                'date': '日期',
+                'acc_cases': '累计',
+                'daily_cases': '日增',
+                'cases_7dma': '近7日平均日增',
+            })
         
         self.state = 2
         print(f'Data of {self.cityId} re-formatted.')
         return self.df
+
+
+    # def prepare(self, rounding=True):
+    #     if self.state < 1:
+    #         self.sync()
+        
+    #     print(f'Re-formatting data of {self.cityId} ...')
+    #     self.df = self.df[self.df['date'] >= self.firstDay]
+        
+    #     self.df['daily_cases'] = self.df['acc_cases'].diff()
+    #     self.df = self.df.dropna()
+        
+    #     self.df = self.df.astype({'acc_cases':'int64','daily_cases':'int64'})
+        
+    #     self.df['cases_7dma'] = self.df['daily_cases'].rolling(window=7).mean()
+    #     self.df = self.df.dropna()
+    #     if rounding:
+    #         self.df['cases_7dma'] = self.df['cases_7dma'].round(decimals = 0)
+    #         self.df = self.df.astype({'cases_7dma':'int64'})
+
+    #     self.df['acc_cases'] = self.df['daily_cases'].cumsum()
+    #     self.df = self.df.reset_index(drop=True)
+        
+    #     self.state = 2
+    #     print(f'Data of {self.cityId} re-formatted.')
+    #     return self.df
     
     def save_pickle(self, path):
         if self.state < 2:
