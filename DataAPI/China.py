@@ -28,11 +28,26 @@ class HongKong(OnlineDataSource):
         df.drop(columns=['pcr_cases', 'latflow_cases', 'pcr_pre22mar'], inplace=True)
         return df
 
+class Beijing(FileDataSource):
+    def __init__(self,initDate=datetime.date(2022, 4, 22)):
+        super().__init__(
+            'beijing', # only local cases
+            '北京', # 仅本土病例
+            initDate=initDate,
+            uri=os.path.join('raw_data', 'beijing.csv')
+        )
+    def connect(self):
+        return pd.read_csv(self.uri, usecols=['date','acc_cases'])
+
+    def df_postprocess(self, df):
+        df['date'] = pd.to_datetime(df['date'], format='%Y/%m/%d').dt.date
+        return df
+
 class Shanghai(FileDataSource):
     def __init__(self,initDate=datetime.date(2022, 2, 26)):
         super().__init__(
             'shanghai',
-            '上海',
+            '上海', # 本土+境外输入
             initDate=initDate,
             uri=os.path.join('raw_data', 'shanghai.csv')
         )
@@ -76,20 +91,6 @@ class ShanghaiByDistrict(FileDataSource):
 
         self.state = 2
         return self.df
-    
-    def save_pickle(self, path):
-        if self.state < 2:
-            self.prepare()
-        self.df.to_pickle(os.path.join(path, f'{self.cityId}.pkl'))
-        print(f'Data of {self.cityId} saved as pickle.')
-        return 1
-        
-    def save_csv(self, path):
-        if self.state < 2:
-            self.prepare()
-        self.df.to_csv(os.path.join(path, f'{self.cityId}.csv'))
-        print(f'Data of {self.cityId} saved as csv.')
-        return 1
     
     def df_postprocess(self, df):
         df['日期'] = pd.to_datetime(df['日期'], format='%Y/%m/%d').dt.date

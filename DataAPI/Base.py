@@ -18,6 +18,7 @@ class DataSource:
             self.sync()
         
         population = {
+            'beijing': 24894300,
             'shanghai': 25665000,
             'seoul': 9736027,
             'tokyo': 14047594,

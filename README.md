@@ -52,7 +52,8 @@ To make plots, please refer to [the example iPython notebook](./example.ipynb).
 | [Tokyo](./DataAPI/Japan.py#L11) | JSON API |
 | [Osaka](./DataAPI/Japan.py#L11) | JSON API |
 | [Hong Kong](./DataAPI/China.py#L13) | JSON API |
-| [Shanghai](./DataAPI/China.py#L37) | Manually maintained CSV file |
+| [Shanghai](./DataAPI/China.py#L52) | [Manually maintained CSV file](./raw_data/shanghai.csv) |
+| [Beijing](./DataAPI/China.py#L37) - Local | [Manually maintained CSV](./raw_data/beijing.csv) file |
 
 ## Appendix
 
