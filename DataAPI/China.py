@@ -31,8 +31,8 @@ class HongKong(OnlineDataSource):
 class Beijing(FileDataSource):
     def __init__(self,initDate=datetime.date(2022, 4, 22)):
         super().__init__(
-            'beijing', # only local cases
-            '北京', # 仅本土病例
+            'beijing',
+            '北京', # 本土+境外输入
             initDate=initDate,
             uri=os.path.join('raw_data', 'beijing.csv')
         )

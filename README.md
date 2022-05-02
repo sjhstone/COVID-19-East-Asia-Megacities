@@ -1,12 +1,15 @@
 # COVID-19 in East Asian Megacities
 
-This repository holds original Python code for processing and visualization COVID-19 data in East Asian megacities amid Omicron variant outbreak including Seoul (서울), Tokyo (東京), Osaka (大阪), Hong Kong (香港) and Shanghai (上海).
+This repository holds Python source code for processing and visualization COVID-19 data in East Asian megacities amid Omicron variant outbreak including Seoul (서울), Tokyo (東京), Osaka (大阪), Hong Kong (香港) and Shanghai (上海).
 
-**NEW**: An online chart based on this project is now available at https://sjhstone.github.io/covid/
+Omicron 毒株造成的 COVID-19 疫情正在东亚的几座代表性城市蔓延，本代码仓库存放着一些用来进行简单数据处理与可视化的源代码。
 
 ## Data Scheme
 
 ### Omicron Wave in 5 Cities
+
+https://sjhstone.github.io/covid/
+
 The processed data has the following fields:
 * date
 * daily new cases (raw)
@@ -19,6 +22,8 @@ The processed data can be found in [`data`](./data/) folder as CSV files.
 
 ### Shanghai District-wise Data
 （上海市按各行政区疫情公开统计数据）
+
+https://sjhstone.github.io/covid/districts/
 
 [处理前的原始数据](./raw_data/shanghai_districts.csv)包含各区自2022年2月26日起的每日实际新增感染者（即确诊病例+无症状感染者-由无症状感染者转为确诊）人数。
 
@@ -55,7 +60,7 @@ To make plots, please refer to [the example iPython notebook](./example.ipynb).
 | [Osaka](./DataAPI/Japan.py#L11) | JSON API |
 | [Hong Kong](./DataAPI/China.py#L13) | JSON API |
 | [Shanghai](./DataAPI/China.py#L52) | [Manually maintained CSV file](./raw_data/shanghai.csv) |
-| [Beijing](./DataAPI/China.py#L37) - Local | [Manually maintained CSV](./raw_data/beijing.csv) file |
+| [Beijing](./DataAPI/China.py#L37) | [Manually maintained CSV file](./raw_data/beijing.csv) |
 
 ## Appendix
 
