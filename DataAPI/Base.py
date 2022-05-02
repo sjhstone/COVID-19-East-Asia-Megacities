@@ -44,8 +44,8 @@ class DataSource:
         self.df = self.df.reset_index(drop=True)
 
         if self.target == 'web':
-            self.df['累计占总人口比'] = self.df['acc_cases'] / population[self.cityId] * 100
-            self.df = self.df.astype({'累计占总人口比':'int64'})
+            self.df['累计占总人口'] = self.df['acc_cases'] * 100 / population[self.cityId]
+            self.df['累计占总人口'] = self.df['累计占总人口'].map('{:,.2f}%'.format)
             self.df.index.name = '天数'
             self.df = self.df.rename(columns = {
                 'date': '日期',
@@ -57,32 +57,6 @@ class DataSource:
         self.state = 2
         print(f'Data of {self.cityId} re-formatted.')
         return self.df
-
-
-    # def prepare(self, rounding=True):
-    #     if self.state < 1:
-    #         self.sync()
-        
-    #     print(f'Re-formatting data of {self.cityId} ...')
-    #     self.df = self.df[self.df['date'] >= self.firstDay]
-        
-    #     self.df['daily_cases'] = self.df['acc_cases'].diff()
-    #     self.df = self.df.dropna()
-        
-    #     self.df = self.df.astype({'acc_cases':'int64','daily_cases':'int64'})
-        
-    #     self.df['cases_7dma'] = self.df['daily_cases'].rolling(window=7).mean()
-    #     self.df = self.df.dropna()
-    #     if rounding:
-    #         self.df['cases_7dma'] = self.df['cases_7dma'].round(decimals = 0)
-    #         self.df = self.df.astype({'cases_7dma':'int64'})
-
-    #     self.df['acc_cases'] = self.df['daily_cases'].cumsum()
-    #     self.df = self.df.reset_index(drop=True)
-        
-    #     self.state = 2
-    #     print(f'Data of {self.cityId} re-formatted.')
-    #     return self.df
     
     def save_pickle(self, path):
         if self.state < 2:
@@ -96,6 +70,14 @@ class DataSource:
             self.prepare()
         self.df.to_csv(os.path.join(path, f'{self.cityId}.csv'))
         print(f'Data of {self.cityId} saved as csv.')
+        return 1
+    
+    def save_webcsv(self, path):
+        if self.state < 2:
+            self.target = 'web'
+            self.prepare(rounding=True)
+        self.df.to_csv(os.path.join(path, f'{self.cityId}.csv'))
+        print(f'Data of {self.cityId} saved as csv for web.')
         return 1
 
 

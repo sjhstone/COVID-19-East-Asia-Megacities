@@ -82,7 +82,7 @@ class ShanghaiByDistrict(FileDataSource):
         elif fmt == 'csv':
             return pd.read_csv(self.uri)
 
-    def prepare(self):
+    def prepare(self, rounding=True):
         if self.state < 1:
             self.sync()
         
@@ -92,15 +92,21 @@ class ShanghaiByDistrict(FileDataSource):
         self.state = 2
         return self.df
     
-    def df_postprocess(self, df):
-        df['日期'] = pd.to_datetime(df['日期'], format='%Y/%m/%d').dt.date
-        for d in (
+    def df_postprocess(self, df, rounding=True):
+        DIST_NAMES = (
             '浦东','黄浦','静安','徐汇','长宁','普陀','虹口','杨浦',
             '宝山','闵行','嘉定','金山','松江','青浦','奉贤','崇明',
-        ):
+        )
+        df['日期'] = pd.to_datetime(df['日期'], format='%Y/%m/%d').dt.date
+        for d in DIST_NAMES:
             df[d] = df[d].astype('int64')
             df[d + '_累计'] = df[d].cumsum()
             df[d + '_7日平均'] = df[d].rolling(window=7).mean()
         df = df.dropna()
+        if rounding:
+            for d in DIST_NAMES:
+                df.loc[:,d + '_7日平均'] = df.loc[:,d + '_7日平均'].round(decimals = 0)
+                df = df.astype({d + '_7日平均':'int64'})
         df = df[df['日期'] >= self.initDate]
+        df.index.name = '天数'
         return df
