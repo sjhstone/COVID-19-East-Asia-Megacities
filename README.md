@@ -1,12 +1,12 @@
 # COVID-19 in East Asian Megacities
 
-This repository holds Python source code for processing and visualization COVID-19 data in East Asian megacities amid Omicron variant outbreak including Seoul (서울), Tokyo (東京), Osaka (大阪), Hong Kong (香港) and Shanghai (上海).
+This repository holds Python source code for processing and visualization COVID-19 data in East Asian megacities amid Omicron variant outbreak including Seoul (서울), Tokyo (東京), Osaka (大阪), Hong Kong (香港), Shanghai (上海) and Beijing (北京).
 
-Omicron 毒株造成的 COVID-19 疫情正在东亚的几座代表性城市蔓延，本代码仓库存放着一些用来进行简单数据处理与可视化的源代码。
+SARS-CoV-2 病毒 Omicron 变异株所造成的 COVID-19 疫情正在东亚的几座代表性城市蔓延，本代码仓库存放着一些用来进行简单数据处理与可视化的源代码。
 
 ## Data Scheme
 
-### Omicron Wave in 5 Cities
+### Omicron Wave in 6 Cities
 
 https://sjhstone.github.io/covid/
 
