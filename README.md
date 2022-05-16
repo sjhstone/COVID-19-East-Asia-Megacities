@@ -73,6 +73,7 @@ Please follow the links in the table below. The links points to the data source 
 
 ### Related data sources
 | Geographical Coverage | Source Format | Notes |
+|--|--|--|
 | [Greater Taipei Area](https://covid-19.nchc.org.tw/dt_005-covidTable_taiwan.php), China | To be added | Native source |
 | [DPRK](https://www.kcna.kp/en) | To be added | Parsed and processed |
 ### Keyword in Local Language
