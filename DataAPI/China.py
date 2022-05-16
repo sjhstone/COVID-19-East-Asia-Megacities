@@ -105,7 +105,7 @@ class ShanghaiByDistrict(FileDataSource):
         df = df.dropna()
         if rounding:
             for d in DIST_NAMES:
-                df.loc[:,d + '_7日平均'] = df.loc[:,d + '_7日平均'].round(decimals = 0)
+                df.loc[:,[d + '_7日平均']] = df.loc[:,[d + '_7日平均']].round(decimals = 0)
                 df = df.astype({d + '_7日平均':'int64'})
         df = df[df['日期'] >= self.initDate]
         df.index.name = '天数'

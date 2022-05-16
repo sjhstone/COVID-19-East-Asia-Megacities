@@ -24,6 +24,7 @@ class DataSource:
             'tokyo': 14047594,
             'osaka': 8784059,
             'hongkong': 7413100,
+            'DPRK': 25780000,
         }
         
         print(f'Re-formatting data of {self.cityId} ...')
