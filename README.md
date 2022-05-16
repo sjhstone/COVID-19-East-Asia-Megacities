@@ -1,12 +1,18 @@
-# COVID-19 in East Asian Megacities
+# COVID-19 in East Asia Megacities
+
+Online visualization is available at: https://sjhstone.github.io/covid/
 
 This repository holds Python source code for processing and visualization COVID-19 data in East Asian megacities amid Omicron variant outbreak including Seoul (서울), Tokyo (東京), Osaka (大阪), Hong Kong (香港), Shanghai (上海) and Beijing (北京).
 
 SARS-CoV-2 病毒 Omicron 变异株所造成的 COVID-19 疫情正在东亚的几座代表性城市蔓延，本代码仓库存放着一些用来进行简单数据处理与可视化的源代码。
 
+You may also find links to official data sources of DPRK and Taiwan region [in the appendix below](#related-data-sources).
+
+你也可以在[下方附录中](#related-data-sources)找到指向朝鲜民主主义人民共和国与中国台湾地区官方数据披露来源的链接。
+
 ## Data Scheme
 
-### Omicron Wave in 6 Cities
+### Omicron Wave in East Asian Megacities
 
 https://sjhstone.github.io/covid/
 
@@ -16,7 +22,7 @@ The processed data has the following fields:
 * daily new cases (7-day moving average)
 * accumulated cases
 
-The first day in the processed data is set to be the day of initial local Omicron case discovery.
+The first day (indexed as day zero) in the processed data is set to be the day of initial disclosure of local Omicron case discovery.
 
 The processed data can be found in [`data`](./data/) folder as CSV files.
 
@@ -53,21 +59,26 @@ Data can be updated by running [collect_data.py](./collect_data.py)
 To make plots, please refer to [the example iPython notebook](./example.ipynb).
 
 ## Data Sources
-| City | Notes | 
-|--|--|
-| [Seoul](./DataAPI/Korea.py#L13) | JSON API |
-| [Tokyo](./DataAPI/Japan.py#L11) | JSON API |
-| [Osaka](./DataAPI/Japan.py#L11) | JSON API |
-| [Hong Kong](./DataAPI/China.py#L13) | JSON API |
-| [Shanghai](./DataAPI/China.py#L52) | [Manually maintained CSV file](./raw_data/shanghai.csv) |
-| [Beijing](./DataAPI/China.py#L37) | [Manually maintained CSV file](./raw_data/beijing.csv) |
+Please follow the links in the table below. The links points to the data source URL in the source code file.
+| Geographical Coverage | Source Format | Notes |
+|--|--|--|
+| [Seoul](./DataAPI/Korea.py#L13), South Korea | JSON API | Native source |
+| [Tokyo](./DataAPI/Japan.py#L11), Japan | JSON API | Native source |
+| [Osaka](./DataAPI/Japan.py#L11), Japan | JSON API | Native source |
+| [Hong Kong](./DataAPI/China.py#L13), China | JSON API | Native source |
+| [Shanghai](./DataAPI/China.py#L52), China | [Manually maintained CSV file](./raw_data/shanghai.csv) | Parsed and processed |
+| [Beijing](./DataAPI/China.py#L37), China | [Manually maintained CSV file](./raw_data/beijing.csv) | Parsed and processed |
 
 ## Appendix
 
+### Related data sources
+| Geographical Coverage | Source Format | Notes |
+| [Greater Taipei Area](https://covid-19.nchc.org.tw/dt_005-covidTable_taiwan.php), China | To be added | Native source |
+| [DPRK](https://www.kcna.kp/en) | To be added | Parsed and processed |
 ### Keyword in Local Language
-| Region | COVID-19 | Omicron variant |
+| Geographical Region | COVID-19 | Omicron variant |
 |--|--|--|
-| Korea | 코로나바이러스감염증-19 (코로나19) | 오미크론 변이 | 감염병 유행 |
+| Sorth Korea | 코로나바이러스감염증-19 (코로나19) | 오미크론 변이 | 감염병 유행 |
 | Japan | 新型コロナウイルス感染症 | オミクロン変異株 | 感染症の流行 |
 | Hong Kong SAR, China | 2019冠狀病毒病 | Omicron變異株 | 疫情 |
 | China (Mainland) | 新型冠状病毒肺炎 (新冠肺炎) | 奥密克戎变异株 | 疫情 |
