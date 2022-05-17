@@ -60,6 +60,9 @@ To make plots, please refer to [the example iPython notebook](./example.ipynb).
 
 ## Data Sources
 Please follow the links in the table below. The links points to the data source URL in the source code file.
+
+Note that data with note "parsed and processed" may deviate from the original official data source due to human-induced error.
+
 | Geographical Coverage | Source Format | Notes |
 |--|--|--|
 | [Seoul](./DataAPI/Korea.py#L13), South Korea | JSON API | Native source |
@@ -68,6 +71,7 @@ Please follow the links in the table below. The links points to the data source 
 | [Hong Kong](./DataAPI/China.py#L13), China | JSON API | Native source |
 | [Shanghai](./DataAPI/China.py#L52), China | [Manually maintained CSV file](./raw_data/shanghai.csv) | Parsed and processed |
 | [Beijing](./DataAPI/China.py#L37), China | [Manually maintained CSV file](./raw_data/beijing.csv) | Parsed and processed |
+| [Pyongyang](./DataAPI/China.py#L37), North Korea | [Manually maintained CSV file](./raw_data/pyongyang.csv) | Parsed and processed |
 
 ## Appendix
 
