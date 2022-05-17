@@ -1,4 +1,5 @@
 import datetime
+from distutils.log import error
 import requests
 import pandas as pd
 import os.path
@@ -34,23 +35,14 @@ class DataSource:
 
         self.df['acc_cases'] = self.df['daily_cases'].cumsum()
         self.df = self.df.reset_index(drop=True)
-
-        if self.target == 'web':
-            self.df['累计占总人口'] = self.df['acc_cases'] * 100 / self.population
-            self.df['累计占总人口'] = self.df['累计占总人口'].map('{:,.2f}%'.format)
-            self.df.index.name = '天数'
-            self.df = self.df.rename(columns = {
-                'date': '日期',
-                'acc_cases': '累计',
-                'daily_cases': '日增',
-                'cases_7dma': '近7日平均日增',
-            })
         
         self.state = 2
         print(f'Data of {self.cityId} re-formatted.')
         return self.df
     
     def save_pickle(self, path):
+        if self.state == 3:
+            error('Please re-run from scratch.')
         if self.state < 2:
             self.prepare()
         self.df.to_pickle(os.path.join(path, f'{self.cityId}.pkl'))
@@ -58,6 +50,8 @@ class DataSource:
         return 1
         
     def save_csv(self, path):
+        if self.state == 3:
+            error('Please re-run from scratch.')
         if self.state < 2:
             self.prepare()
         self.df.to_csv(os.path.join(path, f'{self.cityId}.csv'))
@@ -65,11 +59,21 @@ class DataSource:
         return 1
     
     def save_webcsv(self, path):
-        if self.state < 2:
-            self.target = 'web'
-            self.prepare(rounding=True)
+        assert self.state == 2
+
+        self.df['累计占总人口'] = self.df['acc_cases'] * 100 / self.population
+        self.df['累计占总人口'] = self.df['累计占总人口'].map('{:,.2f}%'.format)
+        self.df.index.name = '天数'
+        self.df = self.df.rename(columns = {
+            'date': '日期',
+            'acc_cases': '累计',
+            'daily_cases': '日增',
+            'cases_7dma': '近7日平均日增',
+        })
+
         self.df.to_csv(os.path.join(path, f'{self.cityId}.csv'))
         print(f'Data of {self.cityId} saved as csv for web.')
+        self.state = 3
         return 1
 
 
