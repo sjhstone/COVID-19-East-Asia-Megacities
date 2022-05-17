@@ -4,10 +4,11 @@ import pandas as pd
 from DataAPI.Base import OnlineDataSource
 
 class Japan(OnlineDataSource):
-    def __init__(self, cityId, cityName, initDate):
+    def __init__(self, cityId, cityName, population, initDate):
         super().__init__(
             cityId,
             cityName,
+            population,
             uri=f'https://opendata.corona.go.jp/api/Covid19JapanAll?dataName={cityName}',
             colsIn=['date','npatients'],
             colsMap={'npatients':'acc_cases',},
@@ -27,7 +28,7 @@ class Japan(OnlineDataSource):
 
 class Tokyo(Japan):
     def __init__(self, initDate=datetime.date(2021, 12, 24)):
-        super().__init__('tokyo', '東京都', initDate)
+        super().__init__('tokyo', '東京都', 14047594, initDate)
     
     def df_postprocess(self, df):
         df = super().df_postprocess(df)
@@ -44,4 +45,4 @@ class Tokyo(Japan):
 
 class Osaka(Japan):
     def __init__(self, initDate=datetime.date(2021, 12, 22)):
-        super().__init__('osaka', '大阪府', initDate)
+        super().__init__('osaka', '大阪府', 8784059, initDate)

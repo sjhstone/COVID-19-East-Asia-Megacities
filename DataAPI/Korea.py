@@ -9,6 +9,7 @@ class Seoul(OnlineDataSource):
         super().__init__(
             'seoul',
             '서울',
+            9736027,
             httpRequester=requests.post,
             uri='https://www.seoul.go.kr/coronaV/searchCoronaDayStatus.do',
             colsIn=['C_DATE2','HJ_ACC'], # 'GAP'

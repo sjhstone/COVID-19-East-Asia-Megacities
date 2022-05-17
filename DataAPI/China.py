@@ -10,6 +10,7 @@ class HongKong(OnlineDataSource):
         super().__init__(
             'hongkong',
             '香港',
+            7413100,
             uri='https://api.data.gov.hk/v2/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Flatest_situation_of_reported_cases_covid_19_chi.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%2C%22filters%22%3A%5B%5B1%2C%22ct%22%2C%5B%22202%22%5D%5D%5D%7D',
             colsIn=['更新日期', '確診個案', '核酸檢測陽性的嚴重急性呼吸綜合症冠狀病毒2個案', '快速抗原測試陽性的嚴重急性呼吸綜合症冠狀病毒2個案'],
             colsMap={'更新日期':'date','確診個案':'pcr_pre22mar', '核酸檢測陽性的嚴重急性呼吸綜合症冠狀病毒2個案':'pcr_cases', '快速抗原測試陽性的嚴重急性呼吸綜合症冠狀病毒2個案':'latflow_cases'},
@@ -33,9 +34,14 @@ class Beijing(FileDataSource):
         super().__init__(
             'beijing',
             '北京', # 本土+境外输入
+            24894300,
             initDate=initDate,
             uri=os.path.join('raw_data', 'beijing.csv')
         )
+
+    def prepare(self):
+        return super().prepare(minWindowSz=7)
+
     def connect(self):
         return pd.read_csv(self.uri, usecols=['date','acc_cases'])
 
@@ -48,6 +54,7 @@ class Shanghai(FileDataSource):
         super().__init__(
             'shanghai',
             '上海', # 本土+境外输入
+            25665000,
             initDate=initDate,
             uri=os.path.join('raw_data', 'shanghai.csv')
         )
@@ -63,6 +70,7 @@ class ShanghaiByDistrict(FileDataSource):
         super().__init__(
             'shanghai_by_district',
             '上海',
+            float('nan'),
             initDate=datetime.date(2022, 3, 27),
             uri=os.path.join('raw_data', 'shanghai_districts.csv')
         )
