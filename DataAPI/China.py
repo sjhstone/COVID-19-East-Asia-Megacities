@@ -1,9 +1,15 @@
+from collections import defaultdict
 import datetime
 import os.path
 import pandas as pd
 
 from DataAPI.Base import OnlineDataSource, FileDataSource
 
+from slimit import ast
+from slimit.parser import Parser
+from slimit.visitors import nodevisitor
+
+import json5
 
 class HongKong(OnlineDataSource):
     def __init__(self,initDate=datetime.date(2021, 12, 31)):
@@ -63,6 +69,41 @@ class Shanghai(FileDataSource):
 
     def df_postprocess(self, df):
         df['date'] = pd.to_datetime(df['date'], format='%Y/%m/%d').dt.date
+        return df
+
+class GreaterTaipei(OnlineDataSource):
+    def __init__(self,initDate=datetime.date(2022, 3, 20)):
+        super().__init__(
+            'taipei',
+            '臺北都會區',
+            6815539,
+            uri={'台北':'https://covid-19.nchc.org.tw/amchartsSource/output/chartdiv_009_town_台北市.min.js','新北':'https://covid-19.nchc.org.tw/amchartsSource/output/chartdiv_009_town_新北市.min.js','基隆':'https://covid-19.nchc.org.tw/amchartsSource/output/chartdiv_009_town_基隆市.min.js'},
+            colsIn=['date', 'daily_cases'],
+            initDate=initDate
+        )
+    def connect(self):
+        parser = Parser()
+
+        greater_taipei = defaultdict(int)
+
+        for sub_name, sub_uri in self.uri.items():
+            response = self.httpRequester(sub_uri).text
+            subjstree = parser.parse(response)
+            dailydata = subjstree.children()[0].expr.args[0].elements[3].expr.right
+            dailydata = dailydata.to_ecma()
+            dailydata = json5.loads(dailydata)
+
+            for d in dailydata:
+                if d['year'] >= self.initDate.strftime('%Y-%m-%d'):
+                    greater_taipei[d['year']] += d['barValue']
+        
+        greater_taipei = [{"date":k, "daily_cases": v} for k, v in greater_taipei.items()]
+
+        return greater_taipei
+
+    def df_postprocess(self, df):
+        df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d').dt.date
+        self.df['acc_cases'] = self.df['daily_cases'].cumsum()
         return df
 
 class ShanghaiByDistrict(FileDataSource):

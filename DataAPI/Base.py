@@ -64,6 +64,7 @@ class DataSource:
         self.df['累计占总人口'] = self.df['acc_cases'] * 100 / self.population
         self.df['累计占总人口'] = self.df['累计占总人口'].map('{:,.2f}%'.format)
         self.df.index.name = '天数'
+        self.df = self.df.reindex(columns=['date','acc_cases','daily_cases','cases_7dma','累计占总人口'])
         self.df = self.df.rename(columns = {
             'date': '日期',
             'acc_cases': '累计',
