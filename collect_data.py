@@ -1,6 +1,7 @@
 from DataAPI import Korea, Japan, China, Dprk
 import datetime
-# ordered by the date of the first reported local community-spreaded Omicron case
+# ordered by the date of the first reported local community-spreaded Omicron case,
+# or first day with reported case number > 10 in the most current wave
 
 webfile_base = '..\\COVID_JS_INTERACTIVE\\covid_5cities_jsdist\\covid\\'
 
@@ -14,6 +15,7 @@ cities.append(Japan.Tokyo())
 cities.append(China.HongKong())
 cities.append(China.Shanghai())
 cities.append(China.Beijing())
+cities.append(China.GreaterTaipei())
 
 cities.append(Dprk.Pyongyang())
 

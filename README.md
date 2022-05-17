@@ -71,15 +71,11 @@ Note that data with note "parsed and processed" may deviate from the original of
 | [Hong Kong](./DataAPI/China.py#L13), China | JSON API | Native source |
 | [Shanghai](./DataAPI/China.py#L52), China | [Manually maintained CSV file](./raw_data/shanghai.csv) | Parsed and processed |
 | [Beijing](./DataAPI/China.py#L37), China | [Manually maintained CSV file](./raw_data/beijing.csv) | Parsed and processed |
-| [Pyongyang](./DataAPI/China.py#L37), North Korea | [Manually maintained CSV file](./raw_data/pyongyang.csv) | Parsed and processed |
+| [Greater Taipei Area](./DataAPI/China.py#L80), China | Extracted from JS source | Parsed and processed |
+| [Pyongyang](./DataAPI/Dprk.py#L14), North Korea | [Manually maintained CSV file](./raw_data/pyongyang.csv) | Parsed and processed |
 
 ## Appendix
 
-### Related data sources
-| Geographical Coverage | Source Format | Notes |
-|--|--|--|
-| [Greater Taipei Area](https://covid-19.nchc.org.tw/dt_005-covidTable_taiwan.php), China | To be added | Native source |
-| [DPRK](https://www.kcna.kp/en) | To be added | Parsed and processed |
 ### Keyword in Local Language
 | Geographical Region | COVID-19 | Omicron variant |
 |--|--|--|
