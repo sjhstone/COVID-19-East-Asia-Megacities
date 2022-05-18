@@ -2,13 +2,9 @@
 
 Online visualization is available at: https://sjhstone.github.io/covid/
 
-This repository holds Python source code for processing and visualization COVID-19 data in East Asian megacities amid Omicron variant outbreak including Seoul (서울), Tokyo (東京), Osaka (大阪), Hong Kong (香港), Shanghai (上海) and Beijing (北京).
+This repository holds Python source code for processing and visualization COVID-19 data in East Asian megacities amid Omicron variant outbreak including Seoul (서울), Tokyo (東京), Osaka (大阪), Hong Kong (香港), Shanghai (上海), Beijing (北京), Greater Taipei Area (臺北都會區) and Pyongyang (평양).
 
 SARS-CoV-2 病毒 Omicron 变异株所造成的 COVID-19 疫情正在东亚的几座代表性城市蔓延，本代码仓库存放着一些用来进行简单数据处理与可视化的源代码。
-
-You may also find links to official data sources of DPRK and Taiwan region [in the appendix below](#related-data-sources).
-
-你也可以在[下方附录中](#related-data-sources)找到指向朝鲜民主主义人民共和国与中国台湾地区官方数据披露来源的链接。
 
 ## Data Scheme
 
